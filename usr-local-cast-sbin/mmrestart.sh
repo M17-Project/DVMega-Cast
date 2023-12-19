@@ -7,3 +7,4 @@
 #
 
 sudo systemctl restart mmdvmhost.service > /dev/null 2>&1 &
+
