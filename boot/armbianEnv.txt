@@ -1,0 +1,9 @@
+verbosity=1
+bootlogo=false
+disp_mode=1920x1080p60
+overlay_prefix=sun8i-h3
+overlays=usbhost1 usbhost2 i2c0 uart1 uart2
+rootdev=/dev/mmcblk0p2
+rootfstype=ext4
+extraargs=net.ifnames=0
+usbstoragequirks=0x2537:0x1066:u,0x2537:0x1068:u

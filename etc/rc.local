@@ -1,0 +1,106 @@
+#!/bin/bash
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+# OPi/NanoPi serial ports:
+mknod "/dev/ttyAMA0" c 4 65
+chown .dialout /dev/ttyAMA0
+chmod 660 /dev/ttyAMA0
+
+# rtl adaps:
+modprobe rtl8xxxu
+modprobe rtl8192cu
+
+# led controller
+modprobe leds_dac124s085 
+
+# AutoGenerate SSH keys if they are missing
+if [ ! -f /etc/ssh/ssh_host_rsa_key ] || [ ! -f /etc/ssh/ssh_host_dsa_key ]; then
+	mount -o remount,rw /
+	dpkg-reconfigure openssh-server
+fi
+
+# If this is a new image, expand the filesystem
+if [ ! -f /boot/.expanded ]; then
+	gpio mode 10 in
+	mount -o remount,rw /boot
+	mount -o remount,rw /
+	touch /boot/.expanded
+	/usr/local/sbin/pistar-expand
+	sync
+	sync
+	sync
+	reboot
+	exit 0
+fi
+
+# Pull in the Config settings from /boot if they exist there
+if [ -f /boot/WPSD_Config_*.zip ]; then
+	/usr/local/sbin/pistar-bootconfig.sh
+	exit 0
+fi
+
+# Pull in the WiFi settings from /boot if they exist there
+if [ -f /boot/wpa_supplicant.conf ]; then
+        mount -o remount,rw /boot
+        mount -o remount,rw /
+        mv /boot/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
+        wpa_cli reconfigure wlan0
+        reboot
+	exit 0
+fi
+
+if [ ! -d /var/log/unattended-upgrades ]; then
+	mkdir -p /var/log/unattended-upgrades
+fi
+
+# Print the IP address
+_IP=$(hostname -I) || true
+if [ "$_IP" ]; then
+  #Sync the clock
+  flock -n /run/lock/ntpdate /usr/sbin/ntpdate-debian -s -b 2>/dev/null &
+fi
+
+# Update the Kernel version in /etc/pistar-release
+_KernelVer=`uname -r`
+_MMDVMHostVer=`MMDVMHost -v | awk '{ print $3 }'`
+mount -o remount,rw /
+sed -i "/kernel/c kernel = $_KernelVer" /etc/pistar-release
+sed -i "/MMDVMHost/c MMDVMHost = $_MMDVMHostVer" /etc/pistar-release
+# Generate /etc/motd
+/usr/local/sbin/motdgen
+
+# cache hw info
+/usr/local/sbin/.wpsd-sys-cache
+
+
+
+# slipstream tasks
+nohup /usr/local/sbin/.wpsd-slipstream-tasks &
+
+# set the gpio to in on pin 10
+gpio mode 10 in
+
+# set to base-radio after power-down (DC)
+/usr/local/cast/sbin/RMBS.sh
+
+# Shuffle the time for the daily crontab jobs
+cronMins=$(shuf -i 0-59 -n 1)
+cronHours=$(shuf -i 2-4 -n1)
+mount -o remount,rw /
+sed -i "/cron.daily/c ${cronMins} ${cronHours}	* * *	root	mount -o remount,rw / && cd / && run-parts --report /etc/cron.daily" /etc/crontab
+
+sync
+sync
+sync
+
+exit 0

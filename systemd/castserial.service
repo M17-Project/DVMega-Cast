@@ -1,0 +1,14 @@
+[Unit]
+Description=CastSerial
+After=network.target
+
+[Service]
+ExecStart=/usr/local/cast/bin/castserial
+WorkingDirectory=/home/pi-star
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi-star
+
+[Install]
+WantedBy=multi-user.target

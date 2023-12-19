@@ -1,0 +1,15 @@
+[Unit]
+Description=CastUDP
+After=network.target
+Before=mmdvmhost.service
+
+[Service]
+ExecStart=/bin/bash -c "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/cast/bin:/usr/local/cast/sbin:$PATH exec /usr/local/cast/bin/castudp"
+WorkingDirectory=/home/pi-star
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi-star
+
+[Install]
+WantedBy=multi-user.target
