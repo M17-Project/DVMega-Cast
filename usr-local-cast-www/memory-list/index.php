@@ -34,7 +34,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 	    <script src="/js/select2/js/select2-searchInputPlaceholder.js?version=<?php echo $versionCmd; ?>"></script>
             <script>
             $(document).ready(function() {
-            $('.dstarRef').select2({searchInputPlaceholder: 'Search...'});
+            $('.dstarRef').select2({searchInputPlaceholder: 'Search...', width: '125px'});
             $('.dstarMod').select2({searchInputPlaceholder: 'Search...'});
             $('.ysfRef').select2({searchInputPlaceholder: 'Search...', width: '150px'});
             $(".RefName").select2({
