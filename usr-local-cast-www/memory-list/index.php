@@ -106,14 +106,14 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
  	    	</div>
                 </div>
 		<div class="contentwide">
-		    <h3 class="larger">Add to Memory List</h3>
+		  <br /><h2 class='ConfSec'>Add to Memory List</h2>
 
 
 <table style="width:100%">
   <tr>
-    <th style="width:33%">D-Star</th>
-    <th style="width:33%">DMR</th>
-    <th style="width:33%">Fusion</th>
+    <th style="width:33%" class="larger">D-Star</th>
+    <th style="width:33%" class="larger">DMR</th>
+    <th style="width:33%" class="larger">YSF</th>
   </tr>
 
   <tr>
@@ -300,16 +300,16 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 
   $fileLocation = '/usr/local/cast/etc/castmemlist.txt';
   $names=file($fileLocation);
-  echo  "<h3>Stored Memories (". count($names) . "/25)";
+  echo  "<br /><h2 class='ConfSec'>Stored Memories (". count($names) . "/25)";
   if(count($names) > 24) echo " Memory full !";
-  echo "</h3> <BR>";
+  echo "</h2> ";
 
   echo  "<table style='width:100%'>";
   echo   "<tr>";
-  echo    "<th style='width:25%'>Mode</th>";
-  echo    "<th style='width:25%'>Reflector / Talkgroup / YSF Room</th>";
-  echo    "<th style='width:25%'>Description</th>";
-  echo    "<th style='width:25%'>Move / Delete</th>";
+  echo    "<th align='left' style='width:25%' class='larger'>Mode</th>";
+  echo    "<th align='left' style='width:25%' class='larger'>Reflector / Talkgroup / YSF Room</th>";
+  echo    "<th align='left' style='width:25%' class='larger'>Description</th>";
+  echo    "<th style='width:25%' class='larger'>Move / Delete</th>";
   echo   "</tr>";
 
   $fileLocation = '/usr/local/cast/etc/castmemlist.txt';
@@ -339,7 +339,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
     echo "<input type='hidden' id='memId' name='memId' value='".$name."'>";
     echo "<input type='submit' value='Down' name='submit'>";
     echo "<input type='submit' value='Up' name='submit'>";
-    echo "<input type='submit' value='Delete' name='submit'>";
+    echo "<input type='submit' value='Delete' name='submit' style='background:crimson'>";
 
     echo "</form>";
 
@@ -351,7 +351,8 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
   echo  "</table>";
 ?>
 
-
+		<br />
+		<br />
 	    </div>
 
 	    <div class="footer">
