@@ -1,7 +1,5 @@
-<html>
-<body>
-
 <?php 
+
   $RTG_ref = $_POST["RTG_ref"];
   $RTG_mod = $_POST["RTG_mod"];
   $RTG_lab = $_POST["RTG_lab"]; 
@@ -58,9 +56,6 @@
     
   }
 
+  header("Location: /admin/cast/memory-list/");
+
 ?>
-
-<?php header("Location: /admin/cast/memory-list/"); ?>
-</body>
-</html>
-

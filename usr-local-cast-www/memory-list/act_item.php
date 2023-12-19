@@ -1,6 +1,3 @@
-<html>
-<body>
-
 <?php 
   $cont =  $_POST["memId"]; 
   $cont = substr($cont,0,-2);
@@ -18,6 +15,7 @@
   foreach($names as $name)
   {
     $name = substr($name,0,-1);
+    $name = str_replace("DST", "D-Star", $name);
 
     if($name == $cont)
     {  
@@ -46,6 +44,7 @@ if($action == "Up")
    if(strlen($name) > 3)
    {
     $name = substr($name,0,-1);
+    $name = str_replace("DST", "D-Star", $name);
     $arr[$t] = $name;
     $t += 1;
    } 
@@ -91,6 +90,7 @@ if($action == "Down")
    if(strlen($name) > 3)
    {
     $name = substr($name,0,-1);
+    $name = str_replace("DST", "D-Star", $name);
     $arr[$t] = $name;
     $t += 1;
    }
@@ -127,16 +127,8 @@ if($action == "Down")
   fclose($myfile);
 }
 
-
-
-
-
 //==================================
  header("Location: /admin/cast/memory-list/");
 
-
 ?>
 
-
-</body>
-</html>

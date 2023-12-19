@@ -120,6 +120,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
     <td>
    <form action="add_item.php" method="post">  
       Reflector &amp; Module <select name="RTG_ref" class="dstarRef">
+	<option disabled selected>Select...</option>
 <?php
         $fileLocation =  "/usr/local/etc/DCS_Hosts.txt";
         $names=file($fileLocation);
@@ -128,7 +129,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
          if(substr($name,0,3) == "DCS")
          {
            $li = substr($name,0,6);
-           echo"<option value='".$li."'>". $li . "</option>";
+           echo"<option value='".$li."'>". $li . "</option>\n";
          }
         }
 
@@ -139,7 +140,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
          if(substr($name,0,3) == "REF")
          {
            $li = substr($name,0,6);
-           echo"<option value='".$li."'>". $li . "</option>";
+           echo"<option value='".$li."'>". $li . "</option>\n";
          }
         }
 
@@ -150,7 +151,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
          if(substr($name,0,3) == "XRF")
          {
            $li = substr($name,0,6);
-           echo"<option value='".$li."'>". $li . "</option>";
+           echo"<option value='".$li."'>". $li . "</option>\n";
          }
         }
 
@@ -161,7 +162,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
          if(substr($name,0,1) != "#")
          {
            $li = "XLX". substr($name,0,3);
-           echo"<option value='".$li."'>". $li . "</option>";
+           echo"<option value='".$li."'>". $li . "</option>\n";
          }
         }
 ?>
@@ -232,7 +233,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
            $i += 1; 
           } while(substr($name,6+$i, 1) != ";");
 
-           echo"<option value='".$li."'>". $li . "</option>";
+           echo"<option value='".$li."'>". $li . "</option>\n";
          }
         }
 
@@ -243,7 +244,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
          if(substr($name,0,3) == "FCS")
          {
            $li = substr($name,0,8);
-           echo"<option value='".$li."'>". $li . "</option>";
+           echo"<option value='".$li."'>". $li . "</option>\n";
          }
         }
 /*
@@ -308,7 +309,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
   echo    "<th style='width:25%'>Mode</th>";
   echo    "<th style='width:25%'>Reflector / Talkgroup / YSF Room</th>";
   echo    "<th style='width:25%'>Description</th>";
-  echo    "<th style='width:25%'>Action</th>";
+  echo    "<th style='width:25%'>Move / Delete</th>";
   echo   "</tr>";
 
   $fileLocation = '/usr/local/cast/etc/castmemlist.txt';
