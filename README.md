@@ -1,3 +1,3 @@
-## This code is DVMega CAST hardware-specific, *omly*.
+## This code is DVMega CAST hardware-specific, *only*.
 
-All code here copyright `PE1MSZ`, `PE1PLM`, `W0CHP`.
+Copyright `PE1MSZ`, `PE1PLM`, `W0CHP` and DVMega. All rights reserved.
