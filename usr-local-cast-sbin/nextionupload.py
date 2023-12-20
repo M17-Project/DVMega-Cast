@@ -12,7 +12,7 @@ BAUDCOMM = 115200
 BAUDUPLOAD = 115200
 
 if len(sys.argv) != 4:
-	print('usage: python %s /dev/port file_to_upload.tft' % sys.argv[0])
+	print("usage: python %s /dev/port file_to_upload.tft" % sys.argv[0])
 	exit(-2)
 
 PORT = sys.argv[1]
@@ -20,13 +20,13 @@ CHECK_MODEL = sys.argv[2]
 file_path = sys.argv[3]
 
 if os.path.isfile(file_path):
-	print('uploading %s (%i bytes)...' % (file_path, os.path.getsize(file_path)))
+	print("uploading %s (%i bytes)..." % (file_path, os.path.getsize(file_path)))
 else:
-	print('file not found')
+	print("file not found")
 	exit(-1)
 
 fsize = os.path.getsize(file_path)
-print('Filesize: ' + str(fsize))
+print("Filesize: " + str(fsize))
 
 ser = serial.Serial(PORT, BAUDCOMM, timeout=.1, )
 
@@ -44,7 +44,7 @@ def reader():
             acked.set()
             continue
         else:
-            print('<%r>' % r)
+            print("<%r>" % r)
             continue
 
             
@@ -62,9 +62,9 @@ def upload():
     #ser.baudrate = BAUDUPLOAD
     ser.timeout = 1
     threader.start()
-    print('Waiting for ACK...')
+    print("Waiting for ACK...")
     #acked.wait()
-    print('Uploading...')
+    print("Uploading...")
     with open(file_path, 'rb') as hmif:
         dcount = 0
         while True:
@@ -72,14 +72,14 @@ def upload():
             data = hmif.read(4096)
             if len(data) == 0: break
             dcount += len(data)
-            print ('writing %i...' % len(data))
+            print ("writing %i..." % len(data))
             ser.write(data)
             acked.clear()
             sys.stdout.write('\rDownloading, %3.1f%%...' % (dcount/ float(fsize)*100.0))
             sys.stdout.flush()
-            print ('waiting for hmi...')
+            print ("waiting for hmi...")
             acked.wait()
-        print('')
+        print(" ")
     stop_thread.set()
     threader.join(1)
 
@@ -91,7 +91,7 @@ no_connect = True
 for baudrate in ( 115200, 115200, 115200):
     ser.baudrate = baudrate
     ser.timeout = 3000/baudrate + 1.5
-    print('Trying with ' + str(baudrate) + '...')
+    print("Trying with " + str(baudrate) + "...")
     ser.write(b'\xff\xff\xff')
     ser.write(b'\xe0\x0c\x04\xff\x00\x00\x00\x00\x00\x00\x00\x00')
     time.sleep(1)
@@ -101,27 +101,28 @@ for baudrate in ( 115200, 115200, 115200):
     time.sleep(0.25)
     r = ser.read(128)
     if b'comok' in r:
-        print('Connected with ' + str(baudrate) + '!')
+        print("Connected with " + str(baudrate) + "!")
         no_connect = False
         status, unknown1, model, unknown2, version, serial, flash_size = r.strip(b'\xff\x00').split(b',')
-        print('Status: ' + str(status))
-        print('Model: ' + str(model))
-        print('Version: ' + str(version))
-        print('Serial: ' + str(serial))
-        print('Flash size: ' + str(flash_size))
+        print("Status: " + str(status))
+        print("Model: " + str(model))
+        print("Version: " + str(version))
+        print("Serial: " + str(serial))
+        print("Flash size: " + str(flash_size))
         if fsize > int(flash_size):
-            print('File too big!')
+            print("File too big!")
             break
         if not CHECK_MODEL in str(model):
-            print('Wrong Display!')
+            print("Wrong Display!")
             break
         upload()
         break
 
 if no_connect:
-    print('No connection!')
+    print("No connection!")
 else:
-    print('File written to Display!')
+    print("File written to Display!")
 
 ser.close()
+
 
