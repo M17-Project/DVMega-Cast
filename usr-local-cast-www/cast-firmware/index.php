@@ -78,7 +78,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 
   <tr>
     <td style="white-space: normal; padding: 10px;">
-	<form action="upload_main.php" method="post">
+	<form action="upload_main.php" method="post" enctype="multipart/form-data">
 	<p>Select the Firmware file to upload to the DVMEGA-Cast unit.</p>
 	<p><i class="fa fa-exclamation-triangle"></i> DO NOT UNZIP THE FILE; UPLOAD AS-IS.</p>
 	<input type="file" name="fileToUpload" id="fileToUpload">
@@ -87,7 +87,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
     </td>
 
     <td style="white-space: normal; padding: 10px;">
-	<form action="upload_display.php" method="post">
+	<form action="upload_display.php" method="post" enctype="multipart/form-data">
         <p>Select the Firmware file to upload to the DVMEGA-Cast Display.</p>
 	<p><i class="fa fa-exclamation-triangle"></i> DO NOT UNZIP THE FILE; UPLOAD AS-IS.</p>
         <input type="file" name="fileToUpload" id="fileToUpload">
@@ -96,7 +96,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
     </td>
 
   <td style="white-space: normal; padding: 10px;">
-	<form action="upload_radio.php" method="post">
+	<form action="upload_radio.php" method="post" enctype="multipart/form-data">
         <p>Select Firmware-file to upload to the DVMEGA-Cast Hotspot Radio Board</p>
         <input type="file" name="fileToUpload" id="fileToUpload">
         <input type="submit" value="Upload Firmware" name="submit">
