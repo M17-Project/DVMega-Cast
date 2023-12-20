@@ -1,6 +1,12 @@
 <?php
 
-$target_dir = "./fw/";
+$target_dir = "./fw/castmain/";
+
+if (!is_dir($target_dir)) {
+    if (!mkdir($target_dir, 0775, true)) {
+        die("Error: Unable to create the target directory.");
+    }
+}
 
 $original_file_name = $_FILES["fileToUpload"]["name"];
 $target_file = $target_dir . basename($original_file_name);
