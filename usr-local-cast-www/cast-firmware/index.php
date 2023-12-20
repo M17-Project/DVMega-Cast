@@ -68,6 +68,10 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 <br />
 <h2 class="ConfSec larger center">DVMega Cast Firmware Manager</h2>
 <p>This page will allow you to update the DVMega Cast Mainboard, Display, and if equipped; Hotspot Radio Board.</p>
+<p><i class="fa fa-question-circle"></i> To download Cast updates to your registered Cast device, please visit the <a href="https://www.dvmega.nl/update/" target="_new">DVMega Cast Update Server</a>.<br />
+   If your DVMega Cast device is not yet registered, you must <a href="https://www.dvmega.nl/registration/" target="_new">register your device</a> before you can download Cast updates.
+</p>
+   
 <br />
  <table width="100%">
   <tr>
