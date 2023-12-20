@@ -25,12 +25,10 @@ if ($uploadOk == 0) {
 
             include("confirm_main.inc");
         } else {
-            echo "Sorry, there was an error copying the uploaded file to the
-target directory.";
+            echo "Sorry, there was an error copying the uploaded file to the target directory.";
         }
     } else {
-        echo "Sorry, there was an error uploading your file. Error code: " .
-$_FILES["fileToUpload"]["error"];
+        echo "Sorry, there was an error uploading your file. Error code: " . $_FILES["fileToUpload"]["error"];
     }
 }
 
