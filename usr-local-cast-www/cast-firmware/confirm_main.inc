@@ -72,9 +72,10 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 	 <table>
 	    <tr>
 	   	<td>
-		  <form action="confirm_main.php" method="post" enctype="multipart/form-data">
-	  	    <p><button name="button">Run Upgrade</button></p>
-    		  </form>
+		    <form id="upgradeForm" action="confirm_main.php" method="post" enctype="multipart/form-data" onsubmit="return upgradeFormSubmit()">
+  			<p><button id="upgradeButton" name="button" onclick="disableButton()">Run Upgrade</button></p>
+  			<input type="hidden" name="button_clicked" id="buttonClicked" value="false">
+		    </form>
 		</td>
 	    </tr>
 
@@ -97,5 +98,14 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 		<a href="https://wpsd.radio/">WPSD</a> &copy; <code>W0CHP</code> 2020-<?php echo date("Y"); ?><br />
 	    </div>
 	</div>
+	<script>
+	  function disableButton() {
+	    var upgradeButton = document.getElementById('upgradeButton');
+	    upgradeButton.disabled = true;
+	    upgradeButton.innerHTML = 'Please Wait! Firmware Upgrading!';
+	    document.getElementById('buttonClicked').value = 'true';
+	    document.getElementById('upgradeForm').submit();
+	  }
+	</script>
     </body>
 </html>

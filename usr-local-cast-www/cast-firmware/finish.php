@@ -1,62 +1,87 @@
 <?php
-// Load the language support
-require_once('../config/language.php');
-//Load the Pi-Star Release file
-$pistarReleaseConfig = '/etc/pistar-release';
-$configPistarRelease = array();
-$configPistarRelease = parse_ini_file($pistarReleaseConfig, true);
-//Load the Version Info
-require_once('../config/version.php');
+
+require_once $_SERVER['DOCUMENT_ROOT'].'/config/language.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/config/version.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
+
 ?>
-  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-  <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" lang="en">
-  <head>
-    <meta name="robots" content="index" />
-    <meta name="robots" content="follow" />
-    <meta name="language" content="English" />
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <meta name="Author" content="Andrew Taylor (MW0MWZ)" />
-    <meta name="Description" content="Pi-Star Expert Editor" />
-    <meta name="KeyWords" content="Pi-Star" />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="pragma" content="no-cache" />
-<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <meta http-equiv="Expires" content="0" />
-    <title>Pi-Star - Digital Voice Dashboard - Update is Ready</title>
-    <link rel="stylesheet" type="text/css" href="../css/pistar-css.php" />
-  </head>
-  <body>
-  <div class="container">
-  <?php include './header-menu.inc'; ?>
-  <div class="contentwide">
 
-  <table width="100%">
-    <tr><th>Your update has been done</th></tr>
-    <tr><td align="center">
-		<h2>***UPDATE HAS BEEN PROCESSED***</h2>
-		<b>Your unit has been updated, and will reboot now. </b>
-		<b>We will revert to the dashboard in 50 seconds. </b>
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html lang="en">
+	<head>
+	    <meta name="language" content="English" />
+	    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	    <meta http-equiv="pragma" content="no-cache" />
+	    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+	    <meta http-equiv="Expires" content="0" />
+	    <title>WPSD <?php echo $lang['digital_voice']." ".$lang['dashboard']."";?> - DVMega CAST Firmware Manager</title>
+	    <link rel="stylesheet" type="text/css" href="/css/font-awesome-4.7.0/css/font-awesome.min.css" />
+<?php include_once $_SERVER['DOCUMENT_ROOT'].'/config/browserdetect.php'; ?>
+	    <script type="text/javascript" src="/js/jquery.min.js?version=<?php echo $versionCmd; ?>"></script>
+	    <script type="text/javascript" src="/js/functions.js?version=<?php echo $versionCmd; ?>"></script>
+	</head>
+	<body>
+	    <div class="container">
+                <div class="header">
+                    <div class="SmallHeader shLeft noMob">Hostname: <?php echo exec('cat /etc/hostname'); ?></div>
+                    <div class="SmallHeader shRight noMob">
+                      <div id="CheckUpdate">
+                      <?php
+                          include $_SERVER['DOCUMENT_ROOT'].'/includes/checkupdates.php';
+                      ?>
+                      </div><br />
+                    </div>
+                    <h1>WPSD <?php echo $lang['digital_voice']; ?> -  DVMega CAST Firmware Manager</h1>
+			<div class="navbar">
+ 			<script type= "text/javascript">
+			  $(document).ready(function() {
+			    setInterval(function() {
+			      $("#timer").load("/includes/datetime.php");
+			    }, 1000);
 
-
+			    function update() {
+			      $.ajax({
+				type: 'GET',
+				cache: false,
+				url: '/includes/datetime.php',
+				timeout: 1000,
+				success: function(data) {
+				  $("#timer").html(data); 
+				  window.setTimeout(update, 1000);
+				}
+			      });
+			    }
+			  update();
+			});
+		      </script>
+ 		      <div class="headerClock">
+			<span id="timer"></span>
+		      </div>
+ 		      <a class="menuconfig" href="/admin/configure.php"><?php echo $lang['configuration'];?></a>
+		      <a class="menuadmin noMob" href="/admin/"><?php echo $lang['admin'];?></a>
+		      <a class="menudashboard" href="/"><?php echo $lang['dashboard'];?></a>
+ 	    	</div>
+                </div>
+		<div class="contentwide">
+		<br />
+		<h2 class="ConfSec larger center">DVMega Cast Mainboard Firmware Upgrade</h2>
+		<h3 class="larger center">UPDATE HAS BEEN COMPLETED!</h2>
+		<p><b>Your unit has been updated and reinitialized.</br>
+		You will be redirected to the Main Dashboard in 10 seconds...</b></p>
 
                <script language="JavaScript" type="text/javascript">
-                                setTimeout("location.href = \'/index.php\'",5);
-                        </script> 
-  </table>
-</div>
-<?php 
-           system('sudo mount -o remount,ro / > /dev/null &');
-                //exec('sleep 1 && sudo shutdown -r now > /dev/null &');
+                   setTimeout("location.href = \'/\'",10000);
+               </script> 
 
-?>
-<div class="footer">
-Pi-Star / Pi-Star Dashboard, &copy; Andy Taylor (MW0MWZ) 2014-<?php echo date("Y"); ?>.<br />
-ircDDBGateway Dashboard by Hans-J. Barthen (DL5DI),<br />
-MMDVMDash developed by Kim Huebel (DG9VH), <br />
-Need help? Click <a style="color: #ffffff;" href="https://www.facebook.com/groups/pistar/" target="_new">here for the Support Group</a><br />
-Get your copy of Pi-Star from <a style="color: #ffffff;" href="http://www.pistar.uk/downloads/" target="_new">here</a>.<br />
+		<br />
+		<br />
+	    </div>
 
-</div>
-</body>
+	    <div class="footer">
+		<a href="https://wpsd.radio/">WPSD</a> &copy; <code>W0CHP</code> 2020-<?php echo date("Y"); ?><br />
+	    </div>
+	</div>
+    </body>
 </html>

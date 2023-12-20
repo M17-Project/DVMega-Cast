@@ -6,17 +6,22 @@
 # PE1MSZ, PE1PLM, W0CHP
 #
 
-sudo wpsd-services fullstop
+# let's only stop what's neccessary...
+systemctl stop cron.service  > /dev/null 2>&1
+systemctl stop pistar-watchdog.timer > /dev/null 2>&1
+systemctl stop pistar-watchdog.service > /dev/null 2>&1
+systemctl stop mmdvmhost.timer > /dev/null 2>&1
+systemctl stop mmdvmhost.service > /dev/null 2>&1
 
 # firmware received in zip-format, unzip and continue
-DIR=/opt/cast/usr-local-cast-www/cast-firmware/fw/castmain/
-UPLOADED=$DIR/*.zip
+DIR="/opt/cast/usr-local-cast-www/cast-firmware/fw/castmain"
+UPLOADED="$DIR/*.zip"
 for zipped in $UPLOADED
 do
     sudo unzip -o ${zipped} -d $DIR
 done
 
-FIRMWARE=./cast/*.hex
+FIRMWARE="$DIR/*.hex"
 for found in $FIRMWARE
 do
     echo "Found $found firmware..."
@@ -31,9 +36,18 @@ do
     sudo gpio mode 10 in
 
     # Make a backup of the uploaded FW to backup-folder, and reboot afterwards.
-    sudo mv ${found} $DIR/backup
-    sudo mv $UPLOADED $DIR/backup
-    sudo cast-reset
+    if [ ! -d "$DIR/backup" ] ; then
+	mkdir $DIR/backup
+    fi
+    sudo mv ${found} "$DIR/backup/"
+    sudo mv $UPLOADED "$DIR/backup/"
+    sudo /usr/local/cast/bin/cast-reset
     sleep 2
-    sudo wpsd-services start
+
+    systemctl start mmdvmhost.service > /dev/null 2>&1
+    systemctl start mmdvmhost.timer > /dev/null 2>&1
+    systemctl start pistar-watchdog.service > /dev/null 2>&1
+    systemctl start pistar-watchdog.timer > /dev/null 2>&1
+    systemctl start cron.service > /dev/null 2>&1
 done
+
