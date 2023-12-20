@@ -6,16 +6,23 @@
 # PE1MSZ, PE1PLM, W0CHP
 #
 
-sudo wpsd-services fullstop
+# let's only stop what's neccessary...
+sudo systemctl stop cron.service  > /dev/null 2>&1
+sudo systemctl stop pistar-watchdog.timer > /dev/null 2>&1
+sudo systemctl stop pistar-watchdog.service > /dev/null 2>&1
+sudo systemctl stop mmdvmhost.timer > /dev/null 2>&1
+sudo systemctl stop mmdvmhost.service > /dev/null 2>&1
+sudo systemctl stop castserial.service > /dev/null 2>&1
 
 # firmware received in zip-format, unzip and continue
-UPLOADED=./nextion/*.zip
+DIR="/opt/cast/usr-local-cast-www/cast-firmware/fw/nextion"
+UPLOADED="$DIR/*.zip"
 for zipped in $UPLOADED
 do
-    sudo unzip -o ${zipped} -d ./nextion
+    sudo unzip -o ${zipped} -d $DIR
 done
 
-FIRMWARE=./nextion/*.tft
+FIRMWARE="$DIR/*.tft"
 for found in $FIRMWARE
 do
     echo "Found $found firmware..."
@@ -25,18 +32,21 @@ do
 	(*T024*)  python3 /usr/local/cast/sbin/nextionupload.py /dev/ttyAMA0 NX3224T024 ${found};;
     esac
 
-    # Firmware found, uploading with python-script.
-    # pythonupload has been modified!!
-
-    #python ./nextion/nextionupload.py /dev/ttyAMA0 NX3224F024 ${found}
-
-    # move to backup folder, and reboot
-    sudo mv ./nextion/*.tft ./nextion/backup
-    sudo mv ./nextion/*.zip ./nextion/backup
-    # to make it work, reset mainboard, and reboot afterwards.
+    # Make a backup of the uploaded FW to backup-folder
+    if [ ! -d "$DIR/backup" ] ; then
+	mkdir $DIR/backup
+    fi
+    sudo mv ${found} "$DIR/backup/"
+    sudo mv $UPLOADED "$DIR/backup/"
     sleep 2 
-    sudo cast-reset
+    sudo /usr/local/cast/sbin/cast-reset
     sleep 2 
-    sudo wpsd-services start
- done
+
+    sudo systemctl start castserial.service > /dev/null 2>&1
+    sudo systemctl start mmdvmhost.service > /dev/null 2>&1
+    sudo systemctl start mmdvmhost.timer > /dev/null 2>&1
+    sudo systemctl start pistar-watchdog.service > /dev/null 2>&1
+    sudo systemctl start pistar-watchdog.timer > /dev/null 2>&1
+    sudo systemctl start cron.service > /dev/null 2>&1
+done
 

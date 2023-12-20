@@ -7,11 +7,11 @@
 #
 
 # let's only stop what's neccessary...
-systemctl stop cron.service  > /dev/null 2>&1
-systemctl stop pistar-watchdog.timer > /dev/null 2>&1
-systemctl stop pistar-watchdog.service > /dev/null 2>&1
-systemctl stop mmdvmhost.timer > /dev/null 2>&1
-systemctl stop mmdvmhost.service > /dev/null 2>&1
+sudo systemctl stop cron.service  > /dev/null 2>&1
+sudo systemctl stop pistar-watchdog.timer > /dev/null 2>&1
+sudo systemctl stop pistar-watchdog.service > /dev/null 2>&1
+sudo systemctl stop mmdvmhost.timer > /dev/null 2>&1
+sudo systemctl stop mmdvmhost.service > /dev/null 2>&1
 
 # firmware received in zip-format, unzip and continue
 DIR="/opt/cast/usr-local-cast-www/cast-firmware/fw/castmain"
@@ -44,10 +44,10 @@ do
     sudo /usr/local/cast/bin/cast-reset
     sleep 2
 
-    systemctl start mmdvmhost.service > /dev/null 2>&1
-    systemctl start mmdvmhost.timer > /dev/null 2>&1
-    systemctl start pistar-watchdog.service > /dev/null 2>&1
-    systemctl start pistar-watchdog.timer > /dev/null 2>&1
-    systemctl start cron.service > /dev/null 2>&1
+    sudo systemctl start mmdvmhost.service > /dev/null 2>&1
+    sudo systemctl start mmdvmhost.timer > /dev/null 2>&1
+    sudo systemctl start pistar-watchdog.service > /dev/null 2>&1
+    sudo systemctl start pistar-watchdog.timer > /dev/null 2>&1
+    sudo systemctl start cron.service > /dev/null 2>&1
 done
 
