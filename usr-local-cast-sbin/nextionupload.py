@@ -2,6 +2,7 @@
 # coding=utf-8
 
 # this file has been modified for DVMEGA-Cast by PE1MSZ (ruud@combitronics.nl)
+# Py3 update by W0CHP - WPSD Project
 import threading
 import time
 import os
