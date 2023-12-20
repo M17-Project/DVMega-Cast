@@ -111,15 +111,15 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 
 <table style="width:100%">
   <tr>
-    <th style="width:33%" class="larger">D-Star</th>
-    <th style="width:33%" class="larger">DMR</th>
-    <th style="width:33%" class="larger">YSF</th>
+    <th align='left' style="width:33%" class="larger">D-Star</th>
+    <th align='left' style="width:33%" class="larger">DMR</th>
+    <th align='left' style="width:33%" class="larger">YSF</th>
   </tr>
 
   <tr>
-    <td>
+   <td style="text-align:left;padding-left:15px;white-space:normal;">
    <form action="add_item.php" method="post">  
-      Reflector &amp; Module <select name="RTG_ref" class="dstarRef">
+      <select name="RTG_ref" class="dstarRef">
 	<option disabled selected>Select...</option>
 <?php
         $fileLocation =  "/usr/local/etc/DCS_Hosts.txt";
@@ -195,27 +195,26 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
         <option value="X">X</option>
         <option value="Y">Y</option>
         <option value="Z">Z</option>
-      </select>
+      </select> <label>Reflector &amp; Module</label>
      <input type="hidden" id="mode" name="mode" value="DST">
-     <p>Description <input type="text" maxlength="12" size = "11" id="RTG_lab" name="RTG_lab"></p>
-   <p><input type="submit" value="Add D-Star Reflector" name="submit"></p>
+     <p><input type="text" maxlength="12" size="11" id="RTG_lab" name="RTG_lab"> <label>Description</label></p>
+     <p><input style="margin:0;" type="submit" value="Add D-Star Reflector" name="submit"></p>
   </form>
   </td>
 
-    <td>
- <form action="add_item.php" method="post">  
-  <p>Talkgroup <input type="text" maxlength="9" size = "11" id="RTG_ref" name="RTG_ref"></p>
+   <td style="text-align:left;padding-left:15px;white-space:normal;">
+   <form action="add_item.php" method="post">  
+   <p><input type="text" maxlength="9" size="11" id="RTG_ref" name="RTG_ref"> <label>Talkgroup</label></p>
     <input type="hidden" id="mode" name="mode" value="DMR">
     <p><input type="hidden" id="RTG_mod" name="RTG_mod" value="0">
-     Description  <input type="text" maxlength="12" size = "11" id="RTG_lab" name="RTG_lab"></p>
-   <p><input type="submit" value="Add DMR Talkgroup" name="submit"></p>
+    <input type="text" maxlength="12" size="11" id="RTG_lab" name="RTG_lab"> <label>Description</label></p>
+   <p><input style="margin:0;" type="submit" value="Add DMR Talkgroup" name="submit"></p>
   </form>
   </td>
 
-
-<td>
- <form action="add_item.php" method="post">
-      <p>Room/Reflector  
+   <td style="text-align:left;padding-left:15px;white-space:normal;">
+   <form action="add_item.php" method="post">
+      <p>
       <select name="RTG_ref" class="ysfRef">
 	<option disabled selected>Select...</option>
 <?php
@@ -249,11 +248,11 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
         }
 ?>
 
-      </select>
+      </select> <label>Room/Reflector</label>
      <input type="hidden" id="mode" name="mode" value="YSF">
      <p><input type="hidden" id="RTG_mod" name="RTG_mod" value="0">
-     Description  <input type="text" maxlength="12" size="11" id="RTG_lab" name="RTG_lab"></p>
-   <p><input type="submit" value="Add Fusion Reflector/Room" name="submit"></p>
+     <input type="text" maxlength="12" size="11" id="RTG_lab" name="RTG_lab"> <label>Description</label></p>
+     <p><input style="margin:0;" type="submit" value="Add Fusion Reflector/Room" name="submit"></p>
   </form>
   </td>
 
