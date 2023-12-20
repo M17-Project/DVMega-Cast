@@ -9,10 +9,11 @@
 sudo wpsd-services fullstop
 
 # firmware received in zip-format, unzip and continue
-UPLOADED=./cast/*.zip
+DIR=/opt/cast/usr-local-cast-www/cast-firmware/fw/castmain/
+UPLOADED=$DIR/*.zip
 for zipped in $UPLOADED
 do
-    sudo unzip -o ${zipped} -d ./cast
+    sudo unzip -o ${zipped} -d $DIR
 done
 
 FIRMWARE=./cast/*.hex
@@ -30,9 +31,9 @@ do
     sudo gpio mode 10 in
 
     # Make a backup of the uploaded FW to backup-folder, and reboot afterwards.
-    sudo mv ${found} cast/backup
-    sudo mv ./cast/*.zip ./cast/backup
+    sudo mv ${found} $DIR/backup
+    sudo mv $UPLOADED $DIR/backup
     sudo cast-reset
     sleep 2
-    sudo wpsd-services fullstop
+    sudo wpsd-services start
 done
