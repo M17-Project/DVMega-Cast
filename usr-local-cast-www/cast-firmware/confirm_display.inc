@@ -67,7 +67,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 		<div class="contentwide">
 <br />
 <h2 class="ConfSec larger center">DVMega Cast Display Firmware Upgrade</h2>
-	 <p class="larger">Please click 'Run Upgrade' button to update Display.</p>
+	 <p class="larger">Please click 'Run Upgrade' button to upgrade the Display.</p>
 
 	 <table>
 	    <tr>
@@ -81,7 +81,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 
 	    <tr>
 		<td>
-                   <p><i class="fa fa-info-circle"></i>Once the upgrade is complete, the display will restart.</p>
+                   <p><i class="fa fa-info-circle"></i> Once the upgrade is complete, the display will restart.</p>
 		</td>
 	    </tr>		
 
