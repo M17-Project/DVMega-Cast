@@ -1,0 +1,5 @@
+#!/bin/sh
+
+sudo /usr/local/cast/bin/cast-reset
+
+/usr/local/cast/bin/avrdude-original $@
