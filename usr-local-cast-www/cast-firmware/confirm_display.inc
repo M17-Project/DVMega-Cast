@@ -68,7 +68,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 <br />
 <h2 class="ConfSec larger center">DVMega Cast Display Firmware Upgrade</h2>
 	 <p class="larger">Please click 'Run Upgrade' button to upgrade the Display.</p>
-	 <p class="larger"><i class="fa fa-exclamation-triangle"></i> This process takes some time...do not interrupt!</p>
+	 <p class="larger"><i class="fa fa-exclamation-triangle"></i> This process takes some time...do not interrupt the the process!</p>
 
 	 <table>
 	    <tr>

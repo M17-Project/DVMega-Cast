@@ -66,48 +66,27 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
                 </div>
 		<div class="contentwide">
 <br />
-<h2 class="ConfSec larger center">DVMega Cast Firmware Manager</h2>
-<p>This page will allow you to update the DVMega Cast Mainboard, Display, and if equipped; Hotspot Radio Board.</p>
-<p><i class="fa fa-question-circle"></i> To download Cast updates to your registered Cast device, please visit the <a href="https://www.dvmega.nl/update/" target="_new">DVMega Cast Update Server</a>.<br />
-   If your DVMega Cast device is not yet registered, you must <a href="https://www.dvmega.nl/registration/" target="_new">register your device</a> before you can download Cast updates.
-</p>
-   
-<br />
- <table width="100%">
-  <tr>
-    <th style="white-space: normal; padding: 10px;" class="larger">DVMEGA-Cast Mainboard</th>
-    <th style="white-space: normal; padding: 10px;" class="larger">DVMEGA-Cast Display</th>
-    <th style="white-space: normal; padding: 10px;" class="larger">DVMEGA-Cast Hotspot Radio Board</th>
-  </tr> 
+<h2 class="ConfSec larger center">DVMega Cast Hotspot Radio Board Firmware Upgrade</h2>
+	 <p class="larger">Please click 'Run Upgrade' button to upgrade the Hotspot Radio Board.</p>
+	 <p class="larger"><i class="fa fa-exclamation-triangle"></i> Do not interrupt this process!</p>
 
-  <tr>
-    <td style="white-space: normal; padding: 10px;">
-	<form action="upload_main.php" method="post" enctype="multipart/form-data">
-	<p>Select the Firmware file to upload to the DVMEGA-Cast unit.</p>
-	<p><i class="fa fa-exclamation-triangle"></i> DO NOT UNZIP THE FILE; UPLOAD AS-IS.</p>
-	<input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" value="Upload Firmware" name="submit">
-	</form>
-    </td>
+	 <table>
+	    <tr>
+	   	<td>
+		    <form id="upgradeForm" action="confirm_radio.php" method="post" enctype="multipart/form-data" onsubmit="return upgradeFormSubmit()">
+  			<p><button id="upgradeButton" name="button" onclick="disableButton()">Run Upgrade</button></p>
+  			<input type="hidden" name="button_clicked" id="buttonClicked" value="false">
+		    </form>
+		</td>
+	    </tr>
 
-    <td style="white-space: normal; padding: 10px;">
-	<form action="upload_display.php" method="post" enctype="multipart/form-data">
-        <p>Select the Firmware file to upload to the DVMEGA-Cast Display.</p>
-	<p><i class="fa fa-exclamation-triangle"></i> DO NOT UNZIP THE FILE; UPLOAD AS-IS.</p>
-        <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" value="Upload Firmware" name="submit">
-	</form>
-    </td>
+	    <tr>
+		<td>
+                   <p><i class="fa fa-info-circle"></i> Once the upgrade is complete, the unit will restart.</p>
+		</td>
+	    </tr>		
 
-  <td style="white-space: normal; padding: 10px;">
-	<form action="upload_radio.php" method="post" enctype="multipart/form-data">
-        <p>Select Firmware-file to upload to the DVMEGA-Cast Hotspot Radio Board</p>
-        <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" value="Upload Firmware" name="submit">
-	</form>
-  </td>
- </tr>
-</table>
+	  </table>
 
 		<br />
 		<br />
@@ -117,5 +96,14 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 		<a href="https://wpsd.radio/">WPSD</a> &copy; <code>W0CHP</code> 2020-<?php echo date("Y"); ?><br />
 	    </div>
 	</div>
+	<script>
+	  function disableButton() {
+	    var upgradeButton = document.getElementById('upgradeButton');
+	    upgradeButton.disabled = true;
+	    upgradeButton.innerHTML = 'Please Wait! Firmware Upgrading!';
+	    document.getElementById('buttonClicked').value = 'true';
+	    document.getElementById('upgradeForm').submit();
+	  }
+	</script>
     </body>
 </html>

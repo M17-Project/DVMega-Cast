@@ -1,6 +1,6 @@
 <?php
 
-$target_dir = "./fw/cast_display/";
+$target_dir = "./fw/cast_radio/";
 
 if (!is_dir($target_dir)) {
     if (!mkdir($target_dir, 0775, true)) {
@@ -33,7 +33,7 @@ if ($uploadOk == 0) {
             // Unlink (delete) the temporary file
             unlink($_FILES["fileToUpload"]["tmp_name"]);
 
-            include("confirm_display.inc");
+            include("confirm_main.inc");
         } else {
             echo "Sorry, there was an error copying the uploaded file to the target directory.";
         }

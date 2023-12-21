@@ -1,7 +1,7 @@
-#1/bin/bash
+#!/bin/bash
 
 #
-# Cast Mainboard Firmware Updater (called from Cast Update Pg.)
+# Nextion TFT uploader (called from Cast Update Pg.)
 #
 # PE1MSZ, PE1PLM, W0CHP
 #
@@ -12,30 +12,27 @@ sudo systemctl stop pistar-watchdog.timer > /dev/null 2>&1
 sudo systemctl stop pistar-watchdog.service > /dev/null 2>&1
 sudo systemctl stop mmdvmhost.timer > /dev/null 2>&1
 sudo systemctl stop mmdvmhost.service > /dev/null 2>&1
+sudo systemctl stop castserial.service > /dev/null 2>&1
 
 # firmware received in zip-format, unzip and continue
-DIR="/opt/cast/usr-local-cast-www/cast-firmware/fw/cast_main"
+DIR="/opt/cast/usr-local-cast-www/cast-firmware/fw/cast_display"
 UPLOADED="$DIR/*.zip"
 for zipped in $UPLOADED
 do
     sudo unzip -o ${zipped} -d $DIR
 done
 
-FIRMWARE="$DIR/*.hex"
+FIRMWARE="$DIR/*.tft"
 for found in $FIRMWARE
 do
     echo "Found $found firmware..."
-    # take action on this file, upload it to mainboard.
 
-    sudo gpio mode 10 out
-    sudo gpio write 10 1
-    sudo gpio write 10 0
-    sleep 1
-    sudo gpio write 10 1
-    sudo stm32flash -e 123 -v -w ${found} /dev/ttyAMA0
-    sudo gpio mode 10 in
+    case ${found} in
+	(*F024*)  python3 /usr/local/cast/sbin/nextionupload.py /dev/ttyAMA0 NX3224F024 ${found};;
+	(*T024*)  python3 /usr/local/cast/sbin/nextionupload.py /dev/ttyAMA0 NX3224T024 ${found};;
+    esac
 
-    # Make a backup of the uploaded FW to backup-folder, and reboot afterwards.
+    # Make a backup of the uploaded FW to backup-folder
     if [ ! -d "$DIR/backup" ] ; then
 	mkdir $DIR/backup
     fi
@@ -45,6 +42,7 @@ do
     sudo /usr/local/cast/bin/cast-reset
     sleep 2
 
+    sudo systemctl start castserial.service > /dev/null 2>&1
     sudo systemctl start mmdvmhost.service > /dev/null 2>&1
     sudo systemctl start mmdvmhost.timer > /dev/null 2>&1
     sudo systemctl start pistar-watchdog.service > /dev/null 2>&1

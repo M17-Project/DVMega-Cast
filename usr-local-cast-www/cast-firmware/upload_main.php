@@ -1,6 +1,6 @@
 <?php
 
-$target_dir = "./fw/castmain/";
+$target_dir = "./fw/cast_main/";
 
 if (!is_dir($target_dir)) {
     if (!mkdir($target_dir, 0775, true)) {

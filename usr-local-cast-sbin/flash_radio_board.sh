@@ -1,7 +1,7 @@
-#!/bin/bash
+#1/bin/bash
 
 #
-# Nextion TFT uploader (called from Cast Update Pg.)
+# Cast Mainboard Firmware Updater (called from Cast Update Pg.)
 #
 # PE1MSZ, PE1PLM, W0CHP
 #
@@ -12,35 +12,32 @@ sudo systemctl stop pistar-watchdog.timer > /dev/null 2>&1
 sudo systemctl stop pistar-watchdog.service > /dev/null 2>&1
 sudo systemctl stop mmdvmhost.timer > /dev/null 2>&1
 sudo systemctl stop mmdvmhost.service > /dev/null 2>&1
-sudo systemctl stop castserial.service > /dev/null 2>&1
 
 # firmware received in zip-format, unzip and continue
-DIR="/opt/cast/usr-local-cast-www/cast-firmware/fw/nextion"
+DIR="/opt/cast/usr-local-cast-www/cast-firmware/fw/cast_radio"
 UPLOADED="$DIR/*.zip"
 for zipped in $UPLOADED
 do
     sudo unzip -o ${zipped} -d $DIR
 done
 
-FIRMWARE="$DIR/*.tft"
+FIRMWARE="$DIR/*.hex"
 for found in $FIRMWARE
 do
     echo "Found $found firmware..."
+    # take action on this file, upload it to hotspot radio board.
+    /usr/local/cast/sbin/cast-avrdude -p m328p -c arduino -P /dev/ttyS2 -b 115200 -F -U flash:w:${found} -v 
 
-    case ${found} in
-	(*F024*)  python3 /usr/local/cast/sbin/nextionupload.py /dev/ttyAMA0 NX3224F024 ${found};;
-	(*T024*)  python3 /usr/local/cast/sbin/nextionupload.py /dev/ttyAMA0 NX3224T024 ${found};;
-    esac
-
-    # Make a backup of the uploaded FW to backup-folder
+    # Make a backup of the uploaded FW to backup-folder, and reboot afterwards.
     if [ ! -d "$DIR/backup" ] ; then
 	mkdir $DIR/backup
     fi
     sudo mv ${found} "$DIR/backup/"
     sudo mv $UPLOADED "$DIR/backup/"
-    sudo /usr/local/cast/bin/cast-reset
-    sleep 2
-    sudo systemctl start castserial.service > /dev/null 2>&1
+
+    #sudo /usr/local/cast/bin/cast-reset
+    #sleep 2
+
     sudo systemctl start mmdvmhost.service > /dev/null 2>&1
     sudo systemctl start mmdvmhost.timer > /dev/null 2>&1
     sudo systemctl start pistar-watchdog.service > /dev/null 2>&1
