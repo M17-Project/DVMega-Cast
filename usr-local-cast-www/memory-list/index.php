@@ -32,6 +32,111 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 	    <link href="/js/select2/css/select2.min.css?version=<?php echo $versionCmd; ?>" rel="stylesheet" />
 	    <script src="/js/select2/js/select2.full.min.js?version=<?php echo $versionCmd; ?>"></script>
 	    <script src="/js/select2/js/select2-searchInputPlaceholder.js?version=<?php echo $versionCmd; ?>"></script>
+	    <link rel="stylesheet" href="/js/jqui/jquery-ui.css?version=<?php echo $versionCmd; ?>">
+	    <link rel="stylesheet" href="/js/jqui/jquery-ui.structure.css?version=<?php echo $versionCmd; ?>">
+	    <link rel="stylesheet" href="/js/jqui/jquery-ui.theme.css?version=<?php echo $versionCmd; ?>">
+	    <script src="/js/jqui/jquery-ui.js?version=<?php echo $versionCmd; ?>"></script>
+	    <style>
+		#sortable {
+		  table-layout: fixed;
+		  width: 100%;
+		  text-align: left;
+		}
+
+		#sortable tbody td {
+		  padding: 8px;
+		}
+
+		.drag-handle {
+		  cursor: move;
+		  display: inline-block;
+		  text-align: center;
+		  padding: 10px 8px 0px 8px;
+		}
+
+		.delete-row {
+		  text-align: center;
+		  color: crimson;
+		}
+		/*
+		#sortable tbody tr:hover {
+		  cursor: move;
+		}
+		*/
+	    </style>
+	    <script>
+                $(document).ready(function () {
+                    // Make the rows sortable
+                    $("#sortable tbody").sortable({
+                        helper: function (e, ui) {
+                            // Preserve original cell widths
+                            ui.children().each(function () {
+                                $(this).width($(this).width());
+                            });
+                            return ui;
+                        },
+                        update: function (event, ui) {
+                            // Update order on the server
+                            updateOrder();
+                        },
+                        stop: function (event, ui) {
+                            // Update the data-index attribute after sorting stops
+                            updateRowIndexes();
+                        }
+                    }).disableSelection();
+
+                    // Handle row deletion
+                    $("#sortable tbody").on("click", ".delete-row", function () {
+                        // Get the index of the row to be deleted
+                        var index = $(this).data("index");
+
+                        // Delete the row on the server
+                        deleteRow(index);
+                    });
+
+                    // Function to update order on the server
+                    function updateOrder() {
+                        var order = $("#sortable tbody tr").map(function () {
+                            return $(this).find("button.delete-row").data("index");
+                        }).get().join(",");
+
+                        $.ajax({
+                            type: "POST",
+                            url: "update_order.php",
+                            data: { order: order },
+                            success: function (response) {
+                                console.log(response);
+                            }
+                        });
+                    }
+
+                    // Function to update row indexes after sorting stops or row deletion
+                    function updateRowIndexes() {
+                        $("#sortable tbody tr").each(function (index) {
+                            $(this).find("button.delete-row").data("index", index);
+                        });
+                    }
+
+                    // Function to delete row on the server
+                    function deleteRow(index) {
+                        $.ajax({
+                            type: "POST",
+                            url: "delete_row.php",
+                            data: { index: index },
+                            success: function (response) {
+                                console.log(response);
+
+                                // Remove the deleted row from the UI
+                                $("#sortable tbody tr:eq(" + index + ")").remove();
+
+                                // Update the data-index attribute after deletion
+                                updateRowIndexes();
+                            }
+                        });
+                    }
+                });
+	    </script>
+
             <script>
             $(document).ready(function() {
             $('.dstarRef').select2({searchInputPlaceholder: 'Search...', width: '125px'});
@@ -260,59 +365,42 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 </table>
 
 <?php
-
-  $fileLocation = '/usr/local/cast/etc/castmemlist.txt';
-  $names=file($fileLocation);
-  echo  "<br /><h2 class='ConfSec'>Stored Memories (". count($names) . "/25)";
-  if(count($names) > 24) echo " Memory full !";
-  echo "</h2> ";
-
-  echo  "<table style='width:100%'>";
-  echo   "<tr>";
-  echo    "<th align='left' style='width:25%' class='larger'>Mode</th>";
-  echo    "<th align='left' style='width:25%' class='larger'>Reflector / Talkgroup / YSF Room</th>";
-  echo    "<th align='left' style='width:25%' class='larger'>Description</th>";
-  echo    "<th style='width:25%' class='larger'>Move / Delete</th>";
-  echo   "</tr>";
-
-  $fileLocation = '/usr/local/cast/etc/castmemlist.txt';
-  $names=file($fileLocation);
-  foreach($names as $name)
-  {
-   if(strlen($name) > 5)
-   {
-    echo  "<tr><td style='padding:8px'align='left' class='divTableCellMono larger'>";
-    for ($i = 0; $i <= strlen($name); $i++)
-    {
-      if(substr($name, $i, 1) != ',')
-      {
-       $name = str_replace("DST", "D-Star", $name);
-       echo substr($name, $i,1);
-      }
-      else
-      {
-       echo "</td>";
-       if($i < strlen($name)-2) echo "<td style='padding:8px' align='left' class='divTableCellMono larger'>";
-      }
-    }
-
-    echo "<td style='padding:8px'>";
-
-    echo "<form action='act_item.php' method='post''>";
-    echo "<input type='hidden' id='memId' name='memId' value='".$name."'>";
-    echo "<input type='submit' value='Down' name='submit'>";
-    echo "<input type='submit' value='Up' name='submit'>";
-    echo "<input type='submit' value='Delete' name='submit' style='background:crimson'>";
-
-    echo "</form>";
-
-    echo "</td>";
-    echo "</tr>";
-   }
-  }
-   
-  echo  "</table>";
+  $csvFile = '/usr/local/cast/etc/castmemlist.txt';
+  $names=file($csvFile);
+  echo "  <br />\n  <h2 class='ConfSec'>Stored Memories (". count($names) . "/25)";
+  if(count($names) > 24) echo " Memory full!";
+  echo "  </h2>\n";
 ?>
+
+<table class="larger" id="sortable">
+    <thead>
+        <tr>
+            <th width="40px">&nbsp;</th>
+            <th>Mode</th>
+            <th>Reflector / YSF Room / DMR Talkgroup</th>
+            <th>Description</th>
+            <th width="40px">&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php
+    // Read the CSV file and display rows
+    $rows = array_map('str_getcsv', file($csvFile));
+
+    foreach ($rows as $index => $row) {
+        // Ensure each row has exactly three columns
+        $row = array_slice($row, 0, 3);
+
+        // Replace "DST" with "D-Star" in the displayed text
+        $row[0] = ($row[0] === 'DST') ? 'D-Star' : $row[0];
+        echo '<tr>'."\n".'<td><span class="drag-handle">&#9776;</span></td>'."\n".'<td>' . implode('</td>'."\n".'<td>', $row) . '</td>'."\n".'<td><button title="Delete from Memory" class="delete-row" data-index="' . $index . '"><i class="fa fa-trash"></i></button></td>'."\n".'</tr>';
+
+        #echo '<tr><td><span class="drag-handle">&#9776;</span></td><td>' . implode('</td><td>', $row) . '</td><td><button class="delete-row" data-index="' . $index . '">Delete</button></td></tr>';
+    }
+    ?>
+    </tbody>
+</table>
+
 
 		<br />
 		<br />
