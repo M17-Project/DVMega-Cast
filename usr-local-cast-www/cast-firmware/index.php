@@ -77,7 +77,9 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
   <tr>
     <th style="white-space: normal; padding: 10px;" class="larger">DVMEGA-Cast Mainboard</th>
     <th style="white-space: normal; padding: 10px;" class="larger">DVMEGA-Cast Display</th>
+    <?php if (file_exists('/dev/ttyS2')) { // only display this if the hotspot radio board is installed ?>
     <th style="white-space: normal; padding: 10px;" class="larger">DVMEGA-Cast Hotspot Radio Board</th>
+    <?php } ?>
   </tr> 
 
   <tr>
@@ -99,13 +101,16 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 	</form>
     </td>
 
-  <td style="white-space: normal; padding: 10px;">
+    <?php if (file_exists('/dev/ttyS2')) { // only display this if the hotspot radio board is installed ?>
+    <td style="white-space: normal; padding: 10px;">
 	<form action="upload_radio.php" method="post" enctype="multipart/form-data">
         <p>Select Firmware-file to upload to the DVMEGA-Cast Hotspot Radio Board</p>
         <input type="file" name="fileToUpload" id="fileToUpload">
         <input type="submit" value="Upload Firmware" name="submit">
 	</form>
-  </td>
+    </td>
+    <?php } ?>
+
  </tr>
 </table>
 
