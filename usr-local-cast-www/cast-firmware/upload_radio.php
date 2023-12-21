@@ -33,7 +33,7 @@ if ($uploadOk == 0) {
             // Unlink (delete) the temporary file
             unlink($_FILES["fileToUpload"]["tmp_name"]);
 
-            include("confirm_main.inc");
+            include("confirm_radio.inc");
         } else {
             echo "Sorry, there was an error copying the uploaded file to the target directory.";
         }
