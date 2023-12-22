@@ -28,29 +28,28 @@ arg1=$1  # DMR
 arg2=$2  # D-Star
 arg3=$3  # YSF
 
-# convert STMD.sh's mode status boolan args to psd-mode-manager's mode status string args
+# Convert STMD's mode status boolean args to wpsd-mode-manager's mode status string args
 convert_to_status() {
     case "$1" in
         0) echo "Disable" ;;
         1) echo "Enable" ;;
     esac
 }
-# now map STMD.sh's boolans to wpsd's strings
+# now map the mode status booleans to strings for wpsd-mode-manager using convert_to_status()
 DMR_s=$(convert_to_status "$arg1")
 DStar_s=$(convert_to_status "$arg2")
 YSF_s=$(convert_to_status "$arg3")
 
 # check if the desired status is different from the current status before calling wpsd-mode-manager
-# and only call the mode that requested the change
 if [ "$DMR_s" != "$DMR_e" ]; then
-    sudo /usr/local/sbin/wpsd-mode-manager DMR $DMR_s
+    sudo /usr/local/sbin/wpsd-mode-manager "DMR" "$DMR_s"
 fi
 
 if [ "$DStar_s" != "$DStar_e" ]; then
-    sudo /usr/local/sbin/wpsd-mode-manager D-Star $DStar_s
+    sudo /usr/local/sbin/wpsd-mode-manager "D-Star" "$DStar_s"
 fi
 
 if [ "$YSF_s" != "$YSF_e" ]; then
-    sudo /usr/local/sbin/wpsd-mode-manager YSF $YSF_s
+    sudo /usr/local/sbin/wpsd-mode-manager "YSF" "$YSF_s"
 fi
 
