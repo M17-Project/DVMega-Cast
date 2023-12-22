@@ -40,17 +40,17 @@ YSF_s=$(convert_to_status "$arg3")
 
 # check if the desired status is different from the current status before calling wpsd-mode-manager
 if [ "$arg1" != "$DStar_e" ]; then
-    sudo /usr/local/cast/bin/cast-reset
+    #sudo /usr/local/cast/bin/cast-reset
     sudo /usr/local/sbin/wpsd-mode-manager "D-Star" "$DStar_s"
 fi
 
 if [ "$arg2" != "$DMR_e" ]; then
-    sudo /usr/local/cast/bin/cast-reset
+    #sudo /usr/local/cast/bin/cast-reset
     sudo /usr/local/sbin/wpsd-mode-manager "DMR" "$DMR_s"
 fi
 
 if [ "$arg3" != "$YSF_e" ]; then
-    sudo /usr/local/cast/bin/cast-reset
+    #sudo /usr/local/cast/bin/cast-reset
     sudo /usr/local/sbin/wpsd-mode-manager "YSF" "$YSF_s"
 fi
 
