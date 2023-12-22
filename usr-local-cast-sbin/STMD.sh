@@ -11,15 +11,46 @@
 # PE1MSZ, PE1PLM, W0CHP
 #
 
-sudo sed -i "/\[DMR\]/,/\[/ s/Enable=.*$/Enable=$2/1" /etc/mmdvmhost
-sudo sed -i "/\[DMR Network\]/,/\[/ s/Enable=.*$/Enable=$2/1" /etc/mmdvmhost
+if [ "$#" -ne 3 ]; then
+    echo "Bad syntax"
+    exit 1
+fi
 
-sudo sed -i "/\[D-Star\]/,/\[/ s/Enable=.*$/Enable=$1/1" /etc/mmdvmhost
-sudo sed -i "/\[D-Star Network\]/,/\[/ s/Enable=.*$/Enable=$1/1" /etc/mmdvmhost
+MMDVMCONFIG="/etc/mmdvmhost"
 
-sudo sed -i "/\[System Fusion\]/,/\[/ s/Enable=.*$/Enable=$3/1" /etc/mmdvmhost
-sudo sed -i "/\[System Fusion Network\]/,/\[/ s/Enable=.*$/Enable=$3/1" /etc/mmdvmhost
+# existing mode statuses:
+DMR_e=$(awk -F'=' '/\[DMR\]/{flag=1; next} flag && /Enable/{gsub(/[[:space:]]/, "", $2); print $2; flag=0}' ${MMDVMCONFIG})
+DStar_e=$(awk -F'=' '/\[D-Star\]/{flag=1; next} flag && /Enable/{gsub(/[[:space:]]/, "", $2); print $2; flag=0}' ${MMDVMCONFIG})
+YSF_e=$(awk -F'=' '/\[System Fusion\]/{flag=1; next} flag && /Enable/{gsub(/[[:space:]]/, "", $2); print $2; flag=0}' ${MMDVMCONFIG})
 
-sudo /usr/local/cast/bin/cast-reset
+# map STMD.sh's 3 args
+arg1=$1  # DMR
+arg2=$2  # D-Star
+arg3=$3  # YSF
 
-sudo wpsd-services restart > /dev/null 2>&1
+# convert STMD.sh's mode status boolan args to psd-mode-manager's mode status string args
+convert_to_status() {
+    case "$1" in
+        0) echo "Disable" ;;
+        1) echo "Enable" ;;
+    esac
+}
+# now map STMD.sh's boolans to wpsd's strings
+DMR_s=$(convert_to_status "$arg1")
+DStar_s=$(convert_to_status "$arg2")
+YSF_s=$(convert_to_status "$arg3")
+
+# check if the desired status is different from the current status before calling wpsd-mode-manager
+# and only call the mode that requested the change
+if [ "$DMR_s" != "$DMR_e" ]; then
+    sudo /usr/local/sbin/wpsd-mode-manager DMR $DMR_s
+fi
+
+if [ "$DStar_s" != "$DStar_e" ]; then
+    sudo /usr/local/sbin/wpsd-mode-manager D-Star $DStar_s
+fi
+
+if [ "$YSF_s" != "$YSF_e" ]; then
+    sudo /usr/local/sbin/wpsd-mode-manager YSF $YSF_s
+fi
+
