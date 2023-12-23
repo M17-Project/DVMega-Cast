@@ -68,13 +68,15 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 	      <div class="divTable">
 		<div class="divTableBody">
 		  <div class="divTableRow">
-		    <div class="divTableCellSans larger"><br />
+		    <div class="divTableCellSans"><br />
 
-<h2 class="ConfSec larger center">DVMega CAST Upgrade Utility</h2>
+<h2 class="ConfSec center">DVMega CAST Upgrade Utility</h2>
+<div class="larger"
 <p>This page will allow you to upgrade the DVMega Cast Mainboard, Display, and if equipped; Hotspot Radio Board.</p>
 <p><i class="fa fa-question-circle"></i> To download Cast upgrades to your registered Cast device, please visit the <a href="https://www.dvmega.nl/update/" target="_new">DVMega Cast Update Server</a>.<br />
    If your DVMega Cast device is not yet registered, you must <a href="https://www.dvmega.nl/registration/" target="_new">register your device</a> before you can download Cast upgrades.
 </p>
+</div>
    
 </div>
 </div>
