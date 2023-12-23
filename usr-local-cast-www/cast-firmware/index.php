@@ -16,7 +16,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 	    <meta http-equiv="pragma" content="no-cache" />
 	    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
 	    <meta http-equiv="Expires" content="0" />
-	    <title>WPSD <?php echo $lang['digital_voice']." ".$lang['dashboard']."";?> - DVMega CAST Firmware Manager</title>
+	    <title>WPSD <?php echo $lang['digital_voice']." ".$lang['dashboard']."";?> - DVMega CAST Upgrade Utility</title>
 	    <link rel="stylesheet" type="text/css" href="/css/font-awesome-4.7.0/css/font-awesome.min.css" />
 <?php include_once $_SERVER['DOCUMENT_ROOT'].'/config/browserdetect.php'; ?>
 	    <script type="text/javascript" src="/js/jquery.min.js?version=<?php echo $versionCmd; ?>"></script>
@@ -33,7 +33,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
                       ?>
                       </div><br />
                     </div>
-                    <h1>WPSD <?php echo $lang['digital_voice']; ?> -  DVMega CAST Firmware Manager</h1>
+                    <h1>WPSD <?php echo $lang['digital_voice']; ?> - DVMega CAST Upgrade Utility</h1>
 			<div class="navbar">
  			<script type= "text/javascript">
 			  $(document).ready(function() {
@@ -70,10 +70,10 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 		  <div class="divTableRow">
 		    <div class="divTableCellSans larger"><br />
 
-<h2 class="ConfSec larger center">DVMega Cast Firmware Manager</h2>
-<p>This page will allow you to update the DVMega Cast Mainboard, Display, and if equipped; Hotspot Radio Board.</p>
-<p><i class="fa fa-question-circle"></i> To download Cast updates to your registered Cast device, please visit the <a href="https://www.dvmega.nl/update/" target="_new">DVMega Cast Update Server</a>.<br />
-   If your DVMega Cast device is not yet registered, you must <a href="https://www.dvmega.nl/registration/" target="_new">register your device</a> before you can download Cast updates.
+<h2 class="ConfSec larger center">DVMega CAST Upgrade Utility</h2>
+<p>This page will allow you to upgrade the DVMega Cast Mainboard, Display, and if equipped; Hotspot Radio Board.</p>
+<p><i class="fa fa-question-circle"></i> To download Cast upgrades to your registered Cast device, please visit the <a href="https://www.dvmega.nl/update/" target="_new">DVMega Cast Update Server</a>.<br />
+   If your DVMega Cast device is not yet registered, you must <a href="https://www.dvmega.nl/registration/" target="_new">register your device</a> before you can download Cast upgrades.
 </p>
    
 </div>

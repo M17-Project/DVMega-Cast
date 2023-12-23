@@ -67,7 +67,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 		<div class="contentwide">
 <br />
 <h2 class="ConfSec larger center">DVMega Cast Mainboard Firmware Upgrade</h2>
-	 <p class="larger"><i class="fa fa-exclamation-circle"></i> Please keep the volume knob fully depressed, and then click the 'Run Upgrade' button to update the Mainboard.</p>
+	 <p class="larger"><i class="fa fa-exclamation-circle"></i> Please keep the volume knob fully depressed, and then click the 'Run Upgrade' button to upgrade the Mainboard.</p>
 	 <p class="larger"><i class="fa fa-exclamation-triangle"></i> Do not interrupt the upgrade process!</p>
 
 	 <table>
