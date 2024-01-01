@@ -8,7 +8,7 @@
 # usage: WPRD.sh [config-params]
 #
 
-FILE=/usr/loca/cast/etc/dmrpre.txt
+FILE=/usr/local/cast/etc/dmrpre.txt
 
 echo $1 | sudo tee $FILE > /dev/null
 
