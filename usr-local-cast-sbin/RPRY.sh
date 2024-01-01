@@ -9,9 +9,10 @@
 input="/usr/local/cast/etc/ysfpre.txt"
 
 ((i = 0))
-while IFS= read -r line
+mapfile -t lines < "$input"
+for line in "${lines[@]}"
 do
-((i=i+1))
-  echo -n "$line" | sudo tee /dev/udp/127.0.0.1/40095 > /dev/null
-done < "$input"
+  ((i++))
+  printf "%s" "$line" > /dev/udp/127.0.0.1/40095 
+done
 
