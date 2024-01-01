@@ -10,5 +10,5 @@
 
 FILE=/usr/local/cast/etc/dmrpre.txt
 
-echo $1 | sudo tee $FILE > /dev/null
-
+formatted_input=$(printf "%s" "$1")
+echo "$formatted_input" | sudo tee "$FILE" > /dev/null
