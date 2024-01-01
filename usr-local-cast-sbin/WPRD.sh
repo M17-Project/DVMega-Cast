@@ -1,14 +1,14 @@
 #!/bin/bash
 
 #
-# DMR Config parameter writer
+# Writes DMR presets from Cast USP server into preset file
 #
 # PE1MSZ, PE1PLM, W0CHP
 #
-# usage: WPED.sh [config-params]
+# usage: WPRD.sh [config-params]
 #
 
 FILE=/usr/loca/cast/etc/dmrpre.txt
 
-echo $1 > $FILE
+echo $1 | sudo tee $FILE > /dev/null
 
