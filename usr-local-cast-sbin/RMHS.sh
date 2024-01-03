@@ -6,6 +6,8 @@
 # PE1MSZ, PE1PLM, W0CHP
 #
 
+sudo systemctl stop castserial.service > /dev/null 2>&1
+
 # Don't run this if called from config page:
 if [ "$1" != "conf_page" ]; then
     sudo systemctl stop mmdvmhost.service > /dev/null 2>&1
