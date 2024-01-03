@@ -18,3 +18,4 @@ sudo gpio mode 10 in
 sleep 1
 
 sudo systemctl start mmdvmhost.service > /dev/null 2>&1 &
+sudo systemctl start castserial.service > /dev/null 2>&1 &

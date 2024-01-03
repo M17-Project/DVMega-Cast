@@ -17,6 +17,7 @@ sudo /usr/local/cast/bin/cast-reset
 sudo gpio mode 10 in
 sleep 1
 
+sudo systemctl stop castserial.service > /dev/null 2>&1 &
 sudo systemctl start mmdvmhost.service > /dev/null 2>&1 &
 
 exit 0
