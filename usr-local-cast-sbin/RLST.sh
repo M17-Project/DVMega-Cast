@@ -8,10 +8,9 @@
 
 input="/usr/local/cast/etc/castmemlist.txt"
 
-((i = 0))
 mapfile -t lines < "$input"
-for line in "${lines[@]}"
-do
-  ((i++))
-  printf "%s" "$line" > /dev/udp/127.0.0.1/40095
+
+for ((i=0; i<${#lines[@]}; i++)); do
+  sudo echo -n "0,LS$((i+1)),${lines[i]}" >/dev/udp/127.0.0.1/40095
 done
+
