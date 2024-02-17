@@ -205,9 +205,9 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
  		      <div class="headerClock">
 			<span id="timer"></span>
 		      </div>
- 		      <a class="menuconfig" href="/admin/configure.php"><?php echo $lang['configuration'];?></a>
-		      <a class="menuadmin noMob" href="/admin/"><?php echo $lang['admin'];?></a>
-		      <a class="menudashboard" href="/"><?php echo $lang['dashboard'];?></a>
+                      <a class="menuconfig" href="/admin/configure.php"><?php echo __( 'Configuration' );?></a>
+                      <a class="menuadmin noMob" href="/admin/"><?php echo __( 'Admin' );?></a>
+                      <a class="menudashboard" href="/"><?php echo __( 'Dashboard' );?></a>
  	    	</div>
                 </div>
 		<div class="contentwide">
