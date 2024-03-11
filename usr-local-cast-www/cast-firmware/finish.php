@@ -5,6 +5,20 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/config/version.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/config/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/mmdvmhost/tools.php';
 
+// Check for GET variables
+$display = isset($_GET['display']) ? $_GET['display'] : null;
+$radio = isset($_GET['radio']) ? $_GET['radio'] : null;
+$main = isset($_GET['main']) ? $_GET['main'] : null;
+
+// Default to ?main if none is passed
+if ($display !== null) {
+    $headerText = "DVMega Cast Display Firmware Upgrade";
+} elseif ($radio !== null) {
+    $headerText = "DVMega Cast Hotspot Radio Firmware Upgrade";
+} else {
+    $headerText = "DVMega Cast Mainboard Firmware Upgrade";
+}
+
 ?>
 
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -67,7 +81,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/mmdvmhost/tools.php';
                 </div>
 		<div class="contentwide">
 		<br />
-		<h2 class="ConfSec larger center">DVMega Cast Mainboard Firmware Upgrade</h2>
+		<h2 class="ConfSec larger center"><?php echo $headerText; ?></h2>
 		<h3 class="larger center">UPDATE HAS BEEN COMPLETED!</h2>
 		<p><b>Your unit has been updated and reinitialized.</br>
 		You will be redirected to the Main Dashboard in 10 seconds...</b></p>

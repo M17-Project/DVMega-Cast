@@ -2,7 +2,7 @@
 if (isset($_POST['button_clicked']) && $_POST['button_clicked'] === 'true')
 {
     exec('sudo /usr/local/cast/sbin/flash_cast.sh');
-    header("Location: /admin/cast/cast-firmware/finish.php");
+    header("Location: /admin/cast/cast-firmware/finish.php?main");
 } else {
     echo "no post data";
 }
