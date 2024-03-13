@@ -48,7 +48,7 @@ sudo sed -i "s/sendE=.*/sendE=0/1" /etc/timeserver
 sudo sed -i "s/send$4=.*/send$4=1/1" /etc/timeserver
 
 # reset the bad boy
-sudo /usr/local/cast/bin/cast-reset
+sudo /usr/local/cast/bin/cast-reset ; sudo gpio mode 10 in
 
 # start WPSD serviices & cron
 sudo wpsd-services start > /dev/null 2>&1 &

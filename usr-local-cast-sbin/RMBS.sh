@@ -19,7 +19,7 @@ sudo sed -i "/repeaterType1=/c\\repeaterType1=0" /etc/ircddbgateway
 # reset the bad boy
 # Don't run this if called from config page:
 if [ "$1" != "conf_page" ]; then
-    sudo /usr/local/cast/bin/cast-reset
+    sudo /usr/local/cast/bin/cast-reset ; sudo gpio mode 10 in
 fi
 sudo gpio mode 10 in
 sleep 1
