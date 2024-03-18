@@ -39,7 +39,7 @@ do
     sudo mv ${found} "$DIR/backup/"
     sudo mv $UPLOADED "$DIR/backup/"
 
-    sudo /usr/local/cast/bin/cast-reset ; sudo gpio mode 10 in
+    sudo /usr/local/cast/bin/cast-reset
     sleep 2
 
     sudo systemctl start castserial.service > /dev/null 2>&1

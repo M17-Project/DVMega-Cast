@@ -1,5 +1,5 @@
 #!/bin/sh
 
-sudo /usr/local/cast/bin/cast-reset ; sudo gpio mode 10 in
+sudo /usr/local/cast/bin/cast-reset
 
 /usr/local/cast/bin/avrdude-original $@
