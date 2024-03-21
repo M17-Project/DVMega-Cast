@@ -29,9 +29,9 @@ for found in $FIRMWARE
 do
     echo "Found $found firmware..."
     case ${found} in
-	(*F024*)  python3 python3 /usr/local/cast/sbin/nextionupload.py -p /dev/ttyAMA0 -c 115200 -u 115200 -i ${found};;
-	(*J024*)  python3 python3 /usr/local/cast/sbin/nextionupload.py -p /dev/ttyAMA0 -c 115200 -u 115200 -i ${found};;
-	(*T024*)  python3 python3 /usr/local/cast/sbin/nextionupload.py -p /dev/ttyAMA0 -c 115200 -u 115200 -i ${found};;
+	(*F024*)  python3 /usr/local/cast/sbin/nextionupload.py -p /dev/ttyAMA0 -c 115200 -u 115200 -i ${found};;
+	(*J024*)  python3 /usr/local/cast/sbin/nextionupload.py -p /dev/ttyAMA0 -c 115200 -u 115200 -i ${found};;
+	(*T024*)  python3 /usr/local/cast/sbin/nextionupload.py -p /dev/ttyAMA0 -c 115200 -u 115200 -i ${found};;
     esac
 
     # Make a backup of the uploaded FW to backup-folder
