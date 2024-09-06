@@ -93,10 +93,7 @@ if ($display !== null) {
 		<br />
 		<br />
 	    </div>
-
-	    <div class="footer">
-		<a href="https://wpsd.radio/">WPSD</a> &copy; <code>W0CHP</code> 2020-<?php echo date("Y"); ?><br />
-	    </div>
+<?php include $_SERVER['DOCUMENT_ROOT']. '/includes/footer.php'; ?>
 	</div>
     </body>
 </html>
