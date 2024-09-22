@@ -39,6 +39,9 @@ if [ "$1" != "conf_page" ]; then
     sudo systemctl start pistar-watchdog.timer > /dev/null 2>&1
 fi
 
-sudo /usr/local/sbin/.wpsd-sys-cache >/dev/null 2>&1
+while ! grep -q "description:" /var/log/pi-star/MMDVM-*.log; do
+    sleep 1
+done
+sudo /usr/local/etc/.wpsd-sys-cache >/dev/null 2>&1
 
 exit 0
