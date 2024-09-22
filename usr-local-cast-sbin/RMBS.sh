@@ -39,6 +39,6 @@ if [ "$1" != "conf_page" ]; then
     sudo systemctl start pistar-watchdog.timer > /dev/null 2>&1
 fi
 
-sudo /usr/loca/etc/.wpsd-sys-cache >/dev/null 2>&1
+sudo /usr/local/sbin/.wpsd-sys-cache >/dev/null 2>&1
 
 exit 0

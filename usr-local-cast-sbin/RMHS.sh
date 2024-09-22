@@ -39,7 +39,7 @@ fi
 
 sudo systemctl start castserial.service > /dev/null 2>&1 &
 
-sudo /usr/loca/etc/.wpsd-sys-cache >/dev/null 2>&1
+sudo /usr/local/sbin/.wpsd-sys-cache >/dev/null 2>&1
 
 exit 0
 
