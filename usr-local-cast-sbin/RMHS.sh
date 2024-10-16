@@ -22,7 +22,7 @@ fi
 sudo sed -i "/\[Modem\]/,/\[/ s/Port=.*$/Port=\/dev\/ttyS2/1" /etc/mmdvmhost
 sudo sed -i "/\[Modem\]/,/\[/ s/UARTSpeed=.*$/UARTSpeed=115200/1" /etc/mmdvmhost
 
-sed -i '/MMDVM protocol version: 1, description:/d; /MMDVM protocol version: 2, description:/d' /var/log/pi-star/MMDVM-*.log  >/dev/null 2>&1
+#sudo sed -i '/MMDVM protocol version: 1, description:/d; /MMDVM protocol version: 2, description:/d' /var/log/pi-star/MMDVM-*.log  >/dev/null 2>&1
 
 # reset the bad boy
 # Don't run this if called from config page:
