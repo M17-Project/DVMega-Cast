@@ -19,8 +19,6 @@ sudo sed -i "/\[Modem\]/,/\[/ s/Port=.*$/Port=\/dev\/ttyAMA0/1" /etc/mmdvmhost
 sudo sed -i "/\[Modem\]/,/\[/ s/UARTSpeed=.*$/UARTSpeed=/1" /etc/mmdvmhost
 sudo sed -i "/repeaterType1=/c\\repeaterType1=0" /etc/ircddbgateway
 
-#sudo sed -i '/MMDVM protocol version: 1, description:/d; /MMDVM protocol version: 2, description:/d' /var/log/pi-star/MMDVM-*.log  >/dev/null 2>&1
-
 # reset the bad boy
 # Don't run this if called from config page:
 if [ "$1" != "conf_page" ]; then
@@ -38,10 +36,5 @@ if [ "$1" != "conf_page" ]; then
     sudo systemctl start pistar-watchdog > /dev/null 2>&1
     sudo systemctl start pistar-watchdog.timer > /dev/null 2>&1
 fi
-
-#while ! grep -q "description:" /var/log/pi-star/MMDVM-*.log; do
-#    sleep 1
-#done
-sudo /usr/local/sbin/.wpsd-sys-cache >/dev/null 2>&1
 
 exit 0
